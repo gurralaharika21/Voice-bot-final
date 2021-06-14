@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<title>Bot</title>
+<head>
+<link
+rel="shortcut icon"
+type="image/x-icon"
+/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+      body {
+        font-family: monospace;
+        /* background-color:orange; */
+        background-color:  #364F6b;
+        /* background-image: url('bgfchat.png'); */
+        /* background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg); */
+        /* background-image: url('chtp.jpg'); */
+        width: auto;
+        height: auto;
+        
+      }
+      
+      
+      #spans :hover {
+        color: bisque;
+      }
+      h1 {
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        padding: 10px;
+      }
+      h3 {
+        color: black;
+        font-size: 20px;
+        margin-top: 3px;
+        text-align: center;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        margin-top: 20px;
+        /* background-color: #6face6; */
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-top: 60px;
+        color: teal;
+        /* background-color: #6face6; */
+      }
+      
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        /* background-color: #6face6; */
+        padding: 5px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 50px;
+      }
+      .botText span {
+        /* background-color: #BEE3FF; */
+        padding: 5px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 500px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        margin-top: 60px;
+        border: 3px solid rgb(12, 12, 12);
+        background-color: #3FC1C9;
+        /* opacity: 0.7; */
+      }
+      .box {
+        border: 2px solid black;
+      }
+      #imgs {
+        width:20px;
+        height:20px;
+      }
+      #heads {
+        color:white;
+        text-shadow: whitesmoke;
+        border-radius: 200px;
+      }
+      #image-bot {
+        width: 60px;
+        height:35px;
+      
+        
+        /* border: 2px solid black; */
+       
+        border-radius: 100px;
+        
+      }
+     
+      #person-image {
+        width: 60px;
+        height:35px;
+      
+        /* border: 2px solid black; */
+        /* padding: 10px; */
+        border-radius: 200px; 
+
+
+        
+      }
+      #head-image {
+        border-radius: 200px;
+        text-align: right;
+        /* justify-content: center; */
+      }
+    </style>
+
+</head>
+
+<body>
+  <!-- <img src= "https://image.flaticon.com/icons/svg/327/327779.svg" alt="botimage"> -->
+<center>
+  
+<h1 id="heads">
+ChatBot 
+</h1>
+<img id= "head-image" src= "https://images.idgesg.net/images/article/2018/02/artificial_intelligence_ai_virtual_assistant_robot_chatbot_thinkstock_856909876-100749925-large.jpg" alt="image"  style="text-align: end;" width= "40px" height="40px">
+</center>
+<div class="box"></div>
+<div class="boxed">
+<div>
+<div id="chatbox">
+<p class="botText">
+<span> <img id = "image-bot" src= "https://image.flaticon.com/icons/svg/327/327779.svg" Align="left" alt="botimage">Hello there! I am a ChatBot &#128515</span>
+</p> 
+</div>
+<div id="userInput">
+<p><input id="textInput" type="text" name="msg" placeholder="Message" /></p>
+<!-- <img id = "imgs" src="cht.jpg" alt="chatbbotimg"> -->
+</div>
+</div>
+<script>
+        const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
+        const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
+        const BOT_NAME = "CoronaBot";
+        const PERSON_NAME = "You";
+
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + '</span><img  id="person-image" src="https://image.flaticon.com/icons/svg/145/145867.svg" Align= "right"alt="person-image" </p>';
+
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText" ><img id = "image-bot" src= "https://image.flaticon.com/icons/svg/327/327779.svg" Align="left" alt="botimage"><span>' + data + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            // appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+            // msgerInput.value = "";
+            getBotResponse();
+
+            
+          }
+        });
+   
+      </script>
+</div>
+</body>
+</html>
